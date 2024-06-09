@@ -101,8 +101,8 @@ async fn trigger_motion_upstairs(data: web::Data<Arc<AppState>>) -> impl Respond
 
 async fn get_status(data: web::Data<Arc<AppState>>) -> impl Responder {
     match data.current_state.lock() {
-        Ok(mut current_state) => {
-            HttpResponse::Ok().body("Success")
+        Ok(current_state) => {
+            HttpResponse::Ok().body(current_state.to_string())
         },
         Err(_) => {
             return HttpResponse::InternalServerError().body("Error");
