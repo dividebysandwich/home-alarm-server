@@ -1,2 +1,4 @@
 # home-alarm-server
-HomeAlarmServer
+
+This is a port of [pyHomeAlarm](https://github.com/dividebysandwich/pyHomeAlarm) to Rust.
+
