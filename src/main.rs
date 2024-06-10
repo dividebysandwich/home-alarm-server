@@ -196,16 +196,15 @@ fn execute_script( scriptfile : &str) {
 }
 
 fn is_sun_set() -> bool {
+    let now = chrono::Utc::now().timestamp() as i64;
     // Get the current unix time
-    let unixtime = suncalc::Timestamp(chrono::Utc::now().timestamp() as i64);
+    let unixtime = suncalc::Timestamp(now);
 
-    // Get the sun position
-    let pos = suncalc::get_position(unixtime,HOME_LATITUDE, HOME_LONGITUDE);
-    let alt = pos.altitude.to_degrees();
-//    println!("Sun position: azimuth: {}, altitude: {}", az, alt);
+    // Get the sunrise and sunset times for today at the given location
+    let times = suncalc::get_times(unixtime, HOME_LATITUDE, HOME_LONGITUDE, None);
 
-    // Sun is set if altitude is negative
-    return alt < 0.0;
+    // Check if the current time is before sunrise or after sunset
+    now < times.sunrise.0 || now > times.sunset.0
 }
 
 #[actix_web::main]
