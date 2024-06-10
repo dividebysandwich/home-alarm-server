@@ -196,13 +196,11 @@ fn execute_script( scriptfile : &str) {
 }
 
 fn is_sun_set() -> bool {
-    let now = chrono::Utc::now().timestamp() as i64;
+    let now = chrono::Utc::now().timestamp()*1000;
     // Get the current unix time
     let unixtime = suncalc::Timestamp(now);
-
     // Get the sunrise and sunset times for today at the given location
     let times = suncalc::get_times(unixtime, HOME_LATITUDE, HOME_LONGITUDE, None);
-
     // Check if the current time is before sunrise or after sunset
     now < times.sunrise.0 || now > times.sunset.0
 }
